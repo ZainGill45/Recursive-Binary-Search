@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursive Binary Search</title>
+    <style>
+        div {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        div h1 {
+            width: 100%;
+            text-align: center;
+            background-color: firebrick;
+            padding-block: 1rem;
+            color: white;
+        }
+
+        #output-paragraph {
+            text-align: center;
+            font-size: 1.25rem;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Basic Binary Search Output</h1>
+        <p id="output-paragraph"></p>
+    </div>
+    <script>
+        // Get the paragraph element from the DOM where the output will be displayed
+        const outputParagraph = document.getElementById("output-paragraph");
+
+        // A sorted array of numbers we will perform binary search on
+        const sortedArray = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20];
+
+        /*
+          Performs binary search on a sorted array to find the index of a given target value.
+          Returns the index if found, or -1 if the value does not exist in the array.
+          Parameters:
+            - array: the sorted array to search
+            - searchTarget: the value we're looking for
+            - start: the starting index of the current search range
+            - end: the ending index of the current search range
+        */
+        const binarySearch = (array, searchTarget, start, end) => {
+            // Base case: if the search range is invalid, the value is not in the array
+            if (start > end) return -1;
+
+            // Calculate the middle index of the current search range
+            const middle = start + Math.trunc((end - start) / 2);
+
+            // If the middle value matches the target, return its index
+            if (array[middle] === searchTarget) {
+                return middle;
+            }
+
+            // If the middle value is less than the target, search in the right half
+            if (array[middle] < searchTarget) {
+                return binarySearch(array, searchTarget, middle + 1, end);
+            }
+
+            // If the middle value is greater than the target, search in the left half
+            if (array[middle] > searchTarget) {
+                return binarySearch(array, searchTarget, start, middle - 1);
+            }
+
+            // (Unreachable code, but included for completeness)
+            return -1;
+        };
+
+        // Display the result of the binary search for the value 16 in the paragraph element
+        outputParagraph.innerHTML = "Output: " + binarySearch(sortedArray, 16, 0, sortedArray.length - 1);
+    </script>
+</body>
+
+</html>
